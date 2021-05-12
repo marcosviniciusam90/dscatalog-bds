@@ -1,14 +1,16 @@
 package com.devsuperior.dscatalog.resources;
 
 import com.devsuperior.dscatalog.dto.CategoryDTO;
+import com.devsuperior.dscatalog.resources.events.CreatedResourceEvent;
 import com.devsuperior.dscatalog.services.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -17,6 +19,8 @@ import java.util.List;
 public class CategoryResource {
 
     private final CategoryService categoryService;
+
+    private final ApplicationEventPublisher publisher;
 
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> findAll() {
@@ -31,10 +35,10 @@ public class CategoryResource {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> create(@RequestBody CategoryDTO categoryDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public CategoryDTO create(@RequestBody CategoryDTO categoryDTO, HttpServletResponse response) {
         categoryDTO = categoryService.create(categoryDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(categoryDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(categoryDTO);
+        publisher.publishEvent(new CreatedResourceEvent(this, categoryDTO.getId(), response));
+        return categoryDTO;
     }
 }
