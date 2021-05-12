@@ -33,4 +33,11 @@ public class CategoryService {
         Category category = optionalCategory.orElseThrow(() -> new EntityNotFoundException(id));
         return CATEGORY_MAPPER.entityToDTO(category);
     }
+
+    @Transactional
+    public CategoryDTO create(CategoryDTO categoryDTO) {
+        Category category = CATEGORY_MAPPER.dtoToEntity(categoryDTO);
+        category = categoryRepository.save(category);
+        return CATEGORY_MAPPER.entityToDTO(category);
+    }
 }
