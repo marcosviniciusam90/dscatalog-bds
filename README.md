@@ -20,3 +20,6 @@ Coleção do Postman para testar requisições: [Link](https://github.com/marcos
 
 Projeto desenvolvido no Bootcamp Spring React da escola DevSuperior <br/>
 https://devsuperior.com.br
+
+Material de apoio <br/>
+https://github.com/devsuperior/dscatalog-resources
