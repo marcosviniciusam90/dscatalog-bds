@@ -41,4 +41,10 @@ public class CategoryResource {
         publisher.publishEvent(new CreatedResourceEvent(this, categoryDTO.getId(), response));
         return categoryDTO;
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDTO update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
+        return categoryService.update(id, categoryDTO);
+    }
 }
