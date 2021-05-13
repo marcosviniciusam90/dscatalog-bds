@@ -1,4 +1,5 @@
 > Projeto no qual o frontend da aplicação (ReactJS/Bootstrap) se comunica com o backend (Java/Spring) por meio de API's REST.
+> Frontend em construção
 
 Frontend em produção: Em breve <br/>
 Backend em produção: Em breve <br/>
