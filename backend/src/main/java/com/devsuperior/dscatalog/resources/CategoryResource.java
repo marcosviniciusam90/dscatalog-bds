@@ -47,4 +47,10 @@ public class CategoryResource {
     public CategoryDTO update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
         return categoryService.update(id, categoryDTO);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        categoryService.delete(id);
+    }
 }

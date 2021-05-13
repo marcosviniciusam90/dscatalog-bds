@@ -4,9 +4,12 @@ import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.mapper.CategoryMapper;
 import com.devsuperior.dscatalog.repositories.CategoryRepository;
+import com.devsuperior.dscatalog.services.exceptions.DatabaseIntegrityException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +54,16 @@ public class CategoryService {
             return CATEGORY_MAPPER.entityToDTO(category);
         } catch (EntityNotFoundException ex) {
             throw new ResourceNotFoundException(id);
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            categoryRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DatabaseIntegrityException(id);
         }
     }
 }
