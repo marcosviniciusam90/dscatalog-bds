@@ -48,8 +48,10 @@ public class ProductService {
     @Transactional
     public ProductDTO update(Long id, ProductDTO productDTO) {
         try {
-            Product product = productRepository.getOne(id);
-            //product.setName(productDTO.getName());
+            Product previousProduct = productRepository.getOne(id);
+
+            Product product = PRODUCT_MAPPER.dtoToEntity(productDTO);
+            product.setId(previousProduct.getId());
             product = productRepository.save(product);
             return PRODUCT_MAPPER.entityToDTO(product);
         } catch (EntityNotFoundException ex) {

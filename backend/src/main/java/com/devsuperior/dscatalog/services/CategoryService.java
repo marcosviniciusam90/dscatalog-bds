@@ -48,8 +48,10 @@ public class CategoryService {
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO categoryDTO) {
         try {
-            Category category = categoryRepository.getOne(id);
-            category.setName(categoryDTO.getName());
+            Category previousCategory = categoryRepository.getOne(id);
+
+            Category category = CATEGORY_MAPPER.dtoToEntity(categoryDTO);
+            category.setId(previousCategory.getId());
             category = categoryRepository.save(category);
             return CATEGORY_MAPPER.entityToDTO(category);
         } catch (EntityNotFoundException ex) {

@@ -202,13 +202,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/products/2",
+							"raw": "{{host}}/products/24",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"products",
-								"2"
+								"24"
 							]
 						}
 					},
@@ -228,7 +228,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Garden\"\n}"
+							"raw": "{\r\n  \"date\": \"2020-07-20T10:00:00Z\",\r\n  \"description\": \"The new generation PS5 video game\",\r\n  \"name\": \"PS5\",\r\n  \"imgUrl\": \"\",\r\n  \"price\": 600.0,\r\n  \"categories\": [\r\n    {\r\n      \"id\": 1\r\n    },\r\n    {\r\n      \"id\": 3\r\n    }\r\n  ]\r\n}"
 						},
 						"url": {
 							"raw": "{{host}}/products",
@@ -256,7 +256,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Music\"\n}"
+							"raw": "{\r\n  \"date\": \"2020-07-20T10:00:00Z\",\r\n  \"description\": \"Updated product description\",\r\n  \"name\": \"Updated product name\",\r\n  \"imgUrl\": \"\",\r\n  \"price\": 600.0,\r\n  \"categories\": [\r\n    {\r\n      \"id\": 1\r\n    },\r\n    {\r\n      \"id\": 3\r\n    }\r\n  ]\r\n}"
 						},
 						"url": {
 							"raw": "{{host}}/products/1",
@@ -281,13 +281,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/products/3",
+							"raw": "{{host}}/products/24",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"products",
-								"3"
+								"24"
 							]
 						}
 					},
