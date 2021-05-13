@@ -14,6 +14,7 @@ Coleção do Postman para testar requisições: [Link](https://github.com/marcos
 - REST
 - Hibernate/JPA
 - Spring Profiles
+- Spring Events
 - Lombok
 - MapStruct
 
