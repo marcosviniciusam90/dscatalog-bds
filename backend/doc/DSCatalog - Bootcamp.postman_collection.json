@@ -9,7 +9,7 @@
 			"name": "Category",
 			"item": [
 				{
-					"name": "All categories",
+					"name": "Categories paged",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -18,12 +18,30 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/categories",
+							"raw": "{{host}}/categories?page=0&linesPerPage=5&direction=ASC&orderBy=name",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "linesPerPage",
+									"value": "5"
+								},
+								{
+									"key": "direction",
+									"value": "ASC"
+								},
+								{
+									"key": "orderBy",
+									"value": "name"
+								}
 							]
 						}
 					},
