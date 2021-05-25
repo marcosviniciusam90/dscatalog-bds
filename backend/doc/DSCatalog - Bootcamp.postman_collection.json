@@ -18,7 +18,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/categories?page=0&linesPerPage=5&direction=ASC&orderBy=name",
+							"raw": "{{host}}/categories?page=0&size=5&sort=name,asc",
 							"host": [
 								"{{host}}"
 							],
@@ -31,16 +31,12 @@
 									"value": "0"
 								},
 								{
-									"key": "linesPerPage",
+									"key": "size",
 									"value": "5"
 								},
 								{
-									"key": "direction",
-									"value": "ASC"
-								},
-								{
-									"key": "orderBy",
-									"value": "name"
+									"key": "sort",
+									"value": "name,asc"
 								}
 							]
 						}
@@ -163,7 +159,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/products?page=0&linesPerPage=5&direction=ASC&orderBy=name",
+							"raw": "{{host}}/products?page=0&size=5&sort=name,asc",
 							"host": [
 								"{{host}}"
 							],
@@ -176,16 +172,12 @@
 									"value": "0"
 								},
 								{
-									"key": "linesPerPage",
+									"key": "size",
 									"value": "5"
 								},
 								{
-									"key": "direction",
-									"value": "ASC"
-								},
-								{
-									"key": "orderBy",
-									"value": "name"
+									"key": "sort",
+									"value": "name,asc"
 								}
 							]
 						}
