@@ -40,6 +40,16 @@ class ProductRepositoryTests {
     }
 
     @Test
+    void saveShouldPersistWithoutAutoIncrementWhenIdIsSet() {
+        Long id = 1L;
+        Product product = Factory.createProduct(id);
+
+        product = productRepository.save(product);
+
+        Assertions.assertEquals(id, product.getId());
+    }
+
+    @Test
     void findByIdShouldReturnAPresentOptionalObjectWhenIdExists() {
         Optional<Product> result = productRepository.findById(existingId);
         Assertions.assertTrue(result.isPresent());

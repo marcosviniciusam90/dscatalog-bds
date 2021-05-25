@@ -11,9 +11,14 @@ import java.util.Collections;
 import java.util.HashSet;
 
 public class Factory {
+
     public static Product createProduct() {
+        return createProduct(1L);
+    }
+
+    public static Product createProduct(Long id) {
         return Product.builder()
-                .id(1L)
+                .id(id)
                 .name("Phone")
                 .description("Good Phone")
                 .price(800.0)
