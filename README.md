@@ -17,6 +17,7 @@ Coleção do Postman para testar requisições: [Link](https://github.com/marcos
 - Spring Events
 - Lombok
 - MapStruct
+- JUnit 5
 
 Projeto desenvolvido no Bootcamp Spring React da escola DevSuperior <br/>
 https://devsuperior.com.br
