@@ -75,15 +75,12 @@ class ProductResourceIntegrationTests {
         result.andExpect(jsonPath("$.name").value(expectedName));
         result.andExpect(jsonPath("$.description").value(expectedDescription));
     }
-
-
+    
     void updateShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
-
-        ProductDTO productDTO = Factory.createProductDTO();
         String jsonBody = objectMapper.writeValueAsString(productDTO);
 
         ResultActions result =
-                mockMvc.perform(put("/products/{id}", nonExistingId)
+                mockMvc.perform(put(API_ENDPOINT + "/{id}", nonExistingId)
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
