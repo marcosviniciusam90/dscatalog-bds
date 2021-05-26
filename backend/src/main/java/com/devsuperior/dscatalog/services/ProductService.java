@@ -1,8 +1,11 @@
 package com.devsuperior.dscatalog.services;
 
+import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.dto.ProductDTO;
+import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.mapper.ProductMapper;
+import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseIntegrityException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -24,6 +27,7 @@ public class ProductService {
 
     private static final ProductMapper PRODUCT_MAPPER = ProductMapper.INSTANCE;
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(Pageable pageable) {
@@ -40,20 +44,19 @@ public class ProductService {
 
     @Transactional
     public ProductDTO create(ProductDTO productDTO) {
-        Product product = PRODUCT_MAPPER.dtoToEntity(productDTO);
-        product = productRepository.save(product);
-        return PRODUCT_MAPPER.entityToDTO(product);
+        Product entity = new Product();
+        copyDtoToEntity(productDTO, entity);
+        entity = productRepository.save(entity);
+        return PRODUCT_MAPPER.entityToDTO(entity);
     }
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO productDTO) {
         try {
-            Product previousProduct = productRepository.getOne(id);
-
-            Product product = PRODUCT_MAPPER.dtoToEntity(productDTO);
-            product.setId(previousProduct.getId());
-            product = productRepository.save(product);
-            return PRODUCT_MAPPER.entityToDTO(product);
+            Product entity = productRepository.getOne(id);
+            copyDtoToEntity(productDTO, entity);
+            entity = productRepository.save(entity);
+            return PRODUCT_MAPPER.entityToDTO(entity);
         } catch (EntityNotFoundException ex) {
             throw new ResourceNotFoundException(id);
         }
@@ -66,6 +69,21 @@ public class ProductService {
             throw new ResourceNotFoundException(id);
         } catch (DataIntegrityViolationException ex) {
             throw new DatabaseIntegrityException(id);
+        }
+    }
+
+    private void copyDtoToEntity(ProductDTO dto, Product entity) {
+
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setDate(dto.getDate());
+        entity.setImgUrl(dto.getImgUrl());
+        entity.setPrice(dto.getPrice());
+
+        entity.getCategories().clear();
+        for (CategoryDTO catDto : dto.getCategories()) {
+            Category category = categoryRepository.getOne(catDto.getId());
+            entity.getCategories().add(category);
         }
     }
 }

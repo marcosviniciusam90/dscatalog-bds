@@ -39,22 +39,22 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDTO create(CategoryDTO categoryDTO) {
-        Category category = CATEGORY_MAPPER.dtoToEntity(categoryDTO);
-        category = categoryRepository.save(category);
-        return CATEGORY_MAPPER.entityToDTO(category);
+    public CategoryDTO create(CategoryDTO dto) {
+        Category entity = new Category();
+        entity.setName(dto.getName());
+        entity = categoryRepository.save(entity);
+        return CATEGORY_MAPPER.entityToDTO(entity);
     }
 
     @Transactional
-    public CategoryDTO update(Long id, CategoryDTO categoryDTO) {
+    public CategoryDTO update(Long id, CategoryDTO dto) {
         try {
-            Category previousCategory = categoryRepository.getOne(id);
-
-            Category category = CATEGORY_MAPPER.dtoToEntity(categoryDTO);
-            category.setId(previousCategory.getId());
-            category = categoryRepository.save(category);
-            return CATEGORY_MAPPER.entityToDTO(category);
-        } catch (EntityNotFoundException ex) {
+            Category entity = categoryRepository.getOne(id);
+            entity.setName(dto.getName());
+            entity = categoryRepository.save(entity);
+            return CATEGORY_MAPPER.entityToDTO(entity);
+        }
+        catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);
         }
     }
