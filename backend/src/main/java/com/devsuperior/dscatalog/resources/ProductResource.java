@@ -24,7 +24,7 @@ public class ProductResource {
     private final ApplicationEventPublisher publisher;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAllPaged(Pageable pageable) {
+    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
         Page<ProductDTO> pageList = productService.findAllPaged(pageable);
         return ResponseEntity.ok(pageList);
     }

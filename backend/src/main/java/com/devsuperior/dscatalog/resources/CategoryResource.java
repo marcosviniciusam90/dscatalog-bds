@@ -24,7 +24,7 @@ public class CategoryResource {
     private final ApplicationEventPublisher publisher;
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDTO>> findAllPaged(Pageable pageable) {
+    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
         Page<CategoryDTO> pageList = categoryService.findAllPaged(pageable);
         return ResponseEntity.ok(pageList);
     }
