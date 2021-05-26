@@ -19,6 +19,7 @@ Coleção do Postman para testar requisições: [Link](https://github.com/marcos
 - MapStruct
 - JUnit 5
 - Mockito
+- Spring MockMvc
 
 Projeto desenvolvido no Bootcamp Spring React da escola DevSuperior <br/>
 https://devsuperior.com.br
