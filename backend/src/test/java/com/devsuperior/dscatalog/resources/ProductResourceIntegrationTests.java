@@ -75,7 +75,8 @@ class ProductResourceIntegrationTests {
         result.andExpect(jsonPath("$.name").value(expectedName));
         result.andExpect(jsonPath("$.description").value(expectedDescription));
     }
-    
+
+    @Test
     void updateShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
         String jsonBody = objectMapper.writeValueAsString(productDTO);
 

@@ -1,7 +1,9 @@
 package com.devsuperior.dscatalog.services;
 
 import com.devsuperior.dscatalog.dto.ProductDTO;
+import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
+import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseIntegrityException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -36,9 +38,13 @@ class ProductServiceTests {
     @Mock
     private ProductRepository productRepository;
 
+    @Mock
+    private CategoryRepository categoryRepository;
+
     private long existingId;
     private long nonExistingId;
     private long dependentId;
+    private Category category;
     private Product product;
     private ProductDTO productDTO;
     private PageImpl<Product> page;
@@ -48,6 +54,7 @@ class ProductServiceTests {
         existingId = 1L;
         nonExistingId = 2L;
         dependentId = 3L;
+        category = Factory.createCategory();
         product = Factory.createProduct();
         productDTO = Factory.createProductDTO();
         page = new PageImpl<>(List.of(product));
@@ -65,6 +72,9 @@ class ProductServiceTests {
 
         when(productRepository.getOne(existingId)).thenReturn(product);
         when(productRepository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
+
+        when(categoryRepository.getOne(existingId)).thenReturn(category);
+        when(categoryRepository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
     }
 
     @Test

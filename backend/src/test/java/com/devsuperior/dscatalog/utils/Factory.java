@@ -42,14 +42,14 @@ public class Factory {
 
     public static Category createCategory() {
         return Category.builder()
-                .id(2L)
+                .id(1L)
                 .name("Electronics")
                 .build();
     }
 
     public static CategoryDTO createCategoryDTO() {
         return CategoryDTO.builder()
-                .id(2L)
+                .id(1L)
                 .name("Electronics")
                 .build();
     }

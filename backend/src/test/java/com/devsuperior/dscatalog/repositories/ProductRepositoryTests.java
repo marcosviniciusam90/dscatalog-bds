@@ -30,8 +30,7 @@ class ProductRepositoryTests {
 
     @Test
     void saveShouldPersistWithAutoIncrementWhenIdIsNull() {
-        Product product = Factory.createProduct();
-        product.setId(null);
+        Product product = Factory.createProduct(null);
 
         product = productRepository.save(product);
 
@@ -41,12 +40,11 @@ class ProductRepositoryTests {
 
     @Test
     void saveShouldPersistWithoutAutoIncrementWhenIdIsSet() {
-        Long id = 1L;
-        Product product = Factory.createProduct(id);
+        Product product = Factory.createProduct(existingId);
 
         product = productRepository.save(product);
 
-        Assertions.assertEquals(id, product.getId());
+        Assertions.assertEquals(existingId, product.getId());
     }
 
     @Test
