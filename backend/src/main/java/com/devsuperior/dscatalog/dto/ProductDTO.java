@@ -4,8 +4,8 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,5 +20,5 @@ public class ProductDTO implements Serializable {
     private Instant date;
 
     @Setter(AccessLevel.NONE)
-    private List<CategoryDTO> categories = new ArrayList<>();
+    private Set<CategoryDTO> categories = new HashSet<>();
 }
