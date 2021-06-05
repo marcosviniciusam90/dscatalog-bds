@@ -11,7 +11,7 @@ public interface ProductMapper {
 
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
-    Product dtoToEntity(ProductDTO productDTO);
+    Product dtoToEntity(ProductDTO dto);
 
     ProductDTO entityToDTO(Product entity);
 

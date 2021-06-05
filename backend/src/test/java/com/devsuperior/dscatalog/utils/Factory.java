@@ -6,7 +6,6 @@ import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -36,7 +35,7 @@ public class Factory {
                 .price(800.0)
                 .imgUrl("https://img.com/img.png")
                 .date(Instant.parse("2021-05-25T03:00:00Z"))
-                .categories(new ArrayList<>(Collections.singletonList(createCategoryDTO())))
+                .categories(new HashSet<>(Collections.singletonList(createCategoryDTO())))
                 .build();
     }
 
