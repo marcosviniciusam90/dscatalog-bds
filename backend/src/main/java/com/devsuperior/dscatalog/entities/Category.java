@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -27,6 +29,10 @@ public class Category implements Serializable {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE") //padrão UTC
     @Setter(AccessLevel.NONE) //para não gerar método setter
     private Instant updatedAt;
+
+    @Setter(AccessLevel.NONE)
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     @PrePersist
     public void prePersist() {
