@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FieldError implements Serializable {
+public class FieldMessage implements Serializable {
     private String fieldName;
     private String message;
 }

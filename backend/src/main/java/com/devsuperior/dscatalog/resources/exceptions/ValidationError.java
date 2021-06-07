@@ -10,9 +10,9 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 public class ValidationError extends StandardError{
-    private List<FieldError> errors;
+    private List<FieldMessage> errors;
 
     public void addError(String fieldName, String message) {
-        errors.add(new FieldError(fieldName, message));
+        errors.add(new FieldMessage(fieldName, message));
     }
 }
