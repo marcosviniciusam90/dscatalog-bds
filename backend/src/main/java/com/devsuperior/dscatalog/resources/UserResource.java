@@ -2,6 +2,7 @@ package com.devsuperior.dscatalog.resources;
 
 import com.devsuperior.dscatalog.dto.UserDTO;
 import com.devsuperior.dscatalog.dto.UserInsertDTO;
+import com.devsuperior.dscatalog.dto.UserUpdateDTO;
 import com.devsuperior.dscatalog.resources.events.CreatedResourceEvent;
 import com.devsuperior.dscatalog.services.UserService;
 import lombok.AllArgsConstructor;
@@ -47,8 +48,8 @@ public class UserResource {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO update(@PathVariable Long id, @Valid @RequestBody UserInsertDTO userInsertDTO) {
-        return userService.update(id, userInsertDTO);
+    public UserDTO update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
+        return userService.update(id, userUpdateDTO);
     }
 
     @DeleteMapping("/{id}")

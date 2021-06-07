@@ -3,6 +3,7 @@ package com.devsuperior.dscatalog.services;
 import com.devsuperior.dscatalog.dto.RoleDTO;
 import com.devsuperior.dscatalog.dto.UserDTO;
 import com.devsuperior.dscatalog.dto.UserInsertDTO;
+import com.devsuperior.dscatalog.dto.UserUpdateDTO;
 import com.devsuperior.dscatalog.entities.Role;
 import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.mapper.UserMapper;
@@ -46,18 +47,22 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO create(UserInsertDTO userInsertDTO) {
+    public UserDTO create(UserInsertDTO dto) {
         User entity = new User();
-        copyDtoToEntity(userInsertDTO, entity);
+        copyDtoToEntity(dto, entity);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+
         entity = userRepository.save(entity);
         return USER_MAPPER.entityToDTO(entity);
     }
 
     @Transactional
-    public UserDTO update(Long id, UserInsertDTO userInsertDTO) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
             User entity = userRepository.getOne(id);
-            copyDtoToEntity(userInsertDTO, entity);
+            copyDtoToEntity(dto, entity);
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+
             entity = userRepository.save(entity);
             return USER_MAPPER.entityToDTO(entity);
         } catch (EntityNotFoundException ex) {
@@ -75,13 +80,11 @@ public class UserService {
         }
     }
 
-    private void copyDtoToEntity(UserInsertDTO dto, User entity) {
+    private void copyDtoToEntity(UserDTO dto, User entity) {
 
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-
 
         entity.getRoles().clear();
         for (RoleDTO roleDto : dto.getRoles()) {
