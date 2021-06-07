@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -38,7 +39,7 @@ public class UserResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO create(@RequestBody UserInsertDTO userInsertDTO, HttpServletResponse response) {
+    public UserDTO create(@Valid @RequestBody UserInsertDTO userInsertDTO, HttpServletResponse response) {
         UserDTO userDTO = userService.create(userInsertDTO);
         publisher.publishEvent(new CreatedResourceEvent(this, userDTO.getId(), response));
         return userDTO;
@@ -46,7 +47,7 @@ public class UserResource {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO update(@PathVariable Long id, @RequestBody UserInsertDTO userInsertDTO) {
+    public UserDTO update(@PathVariable Long id, @Valid @RequestBody UserInsertDTO userInsertDTO) {
         return userService.update(id, userInsertDTO);
     }
 

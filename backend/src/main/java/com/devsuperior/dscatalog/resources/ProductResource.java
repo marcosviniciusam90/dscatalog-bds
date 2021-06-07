@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/products")
@@ -37,7 +38,7 @@ public class ProductResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO create(@RequestBody ProductDTO productDTO, HttpServletResponse response) {
+    public ProductDTO create(@Valid @RequestBody ProductDTO productDTO, HttpServletResponse response) {
         productDTO = productService.create(productDTO);
         publisher.publishEvent(new CreatedResourceEvent(this, productDTO.getId(), response));
         return productDTO;
@@ -45,7 +46,7 @@ public class ProductResource {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductDTO update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+    public ProductDTO update(@PathVariable Long id, @Valid @RequestBody ProductDTO productDTO) {
         return productService.update(id, productDTO);
     }
 
