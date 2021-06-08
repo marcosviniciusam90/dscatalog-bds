@@ -30,13 +30,13 @@
 							"type": "basic",
 							"basic": [
 								{
-									"key": "password",
-									"value": "{{client-secret}}",
+									"key": "username",
+									"value": "{{client-id}}",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "{{client-name}}",
+									"key": "password",
+									"value": "{{client-secret}}",
 									"type": "string"
 								}
 							]

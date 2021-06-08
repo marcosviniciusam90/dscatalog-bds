@@ -3,7 +3,7 @@
 
 Frontend em produção: Em breve <br/>
 Backend em produção: Em breve <br/>
-Coleção do Postman para testar requisições: [Link](https://github.com/marcosviniciusam90/dscatalog-bds/blob/master/backend/doc/DSCatalog%20-%20Bootcamp.postman_collection.json) <br/>
+Coleção do Postman para testar requisições: [Link](https://github.com/marcosviniciusam90/dscatalog-bds/tree/master/backend/doc) <br/>
 
 # O que foi utilizado?
 
