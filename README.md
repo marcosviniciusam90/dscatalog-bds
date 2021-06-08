@@ -20,6 +20,8 @@ Coleção do Postman para testar requisições: [Link](https://github.com/marcos
 - JUnit 5
 - Mockito
 - Spring MockMvc
+- Bean Validation
+- OAuth2 + JWT
 
 Projeto desenvolvido no Bootcamp Spring React da escola DevSuperior <br/>
 https://devsuperior.com.br
