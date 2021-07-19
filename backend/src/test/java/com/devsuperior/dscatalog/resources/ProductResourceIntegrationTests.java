@@ -2,6 +2,7 @@ package com.devsuperior.dscatalog.resources;
 
 import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.utils.Factory;
+import com.devsuperior.dscatalog.utils.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,13 +24,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 class ProductResourceIntegrationTests {
 
+    private static final String API_ENDPOINT = "/products";
+
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final String API_ENDPOINT = "/products";
+    @Autowired
+    private TokenUtil tokenUtil;
+
+    private String accessToken;
 
     private Long existingId;
     private Long nonExistingId;
@@ -37,7 +43,9 @@ class ProductResourceIntegrationTests {
     private ProductDTO productDTO;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
+        accessToken = tokenUtil.obtainAccessToken(mockMvc, "maria@gmail.com", "123456");
+
         existingId = 1L;
         nonExistingId = 1000L;
         countTotalProducts = 25L;
@@ -48,6 +56,7 @@ class ProductResourceIntegrationTests {
     void findAllShouldReturnSortedPageWhenSortByName() throws Exception{
         ResultActions result =
                 mockMvc.perform(get(API_ENDPOINT + "?page=0&size=12&sort=name,asc")
+                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
         result.andExpect(status().isOk());
         result.andExpect(jsonPath("$.totalElements").value(countTotalProducts));
@@ -66,6 +75,7 @@ class ProductResourceIntegrationTests {
 
         ResultActions result =
                 mockMvc.perform(put(API_ENDPOINT + "/{id}", existingId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
@@ -82,6 +92,7 @@ class ProductResourceIntegrationTests {
 
         ResultActions result =
                 mockMvc.perform(put(API_ENDPOINT + "/{id}", nonExistingId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));

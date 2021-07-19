@@ -5,11 +5,13 @@ import com.devsuperior.dscatalog.services.ProductService;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseIntegrityException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import com.devsuperior.dscatalog.utils.Factory;
+import com.devsuperior.dscatalog.utils.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +28,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ProductResource.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class ProductResourceTests {
+
+    private static final String API_ENDPOINT = "/products";
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,7 +43,10 @@ class ProductResourceTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final String API_ENDPOINT = "/products";
+    @Autowired
+    private TokenUtil tokenUtil;
+
+    private String accessToken;
 
     private Long existingId;
     private Long nonExistingId;
@@ -47,7 +55,9 @@ class ProductResourceTests {
     private PageImpl<ProductDTO> page;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
+        accessToken = tokenUtil.obtainAccessToken(mockMvc, "maria@gmail.com", "123456");
+
         existingId = 1L;
         nonExistingId = 2L;
         dependentId = 3L;
@@ -73,6 +83,7 @@ class ProductResourceTests {
     void findAllShouldReturnPage() throws Exception {
         ResultActions result =
                 mockMvc.perform(get(API_ENDPOINT)
+                .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON));
         result.andExpect(status().isOk());
     }
@@ -81,6 +92,7 @@ class ProductResourceTests {
     void findByIdShouldReturnProductDTOWhenIdExists() throws Exception {
         ResultActions result =
                 mockMvc.perform(get(API_ENDPOINT + "/{id}", existingId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk());
@@ -93,6 +105,7 @@ class ProductResourceTests {
     void findByIdShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
         ResultActions result =
                 mockMvc.perform(get(API_ENDPOINT + "/{id}", nonExistingId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isNotFound());
@@ -101,8 +114,10 @@ class ProductResourceTests {
     @Test
     void updateShouldReturnProductDTOWhenIdExists() throws Exception {
         String jsonBody = objectMapper.writeValueAsString(productDTO);
+
         ResultActions result =
                 mockMvc.perform(put(API_ENDPOINT + "/{id}", existingId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
@@ -116,8 +131,10 @@ class ProductResourceTests {
     @Test
     void updateShouldReturnNotFoundWhenIdDoesNotExist() throws Exception{
         String jsonBody = objectMapper.writeValueAsString(productDTO);
+
         ResultActions result =
                 mockMvc.perform(put(API_ENDPOINT + "/{id}", nonExistingId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
@@ -128,8 +145,10 @@ class ProductResourceTests {
     @Test
     void createShouldReturnStatusCreatedAndProductDTO() throws Exception {
         String jsonBody = objectMapper.writeValueAsString(productDTO);
+
         ResultActions result =
                 mockMvc.perform(post(API_ENDPOINT)
+                        .header("Authorization", "Bearer " + accessToken)
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
@@ -144,6 +163,7 @@ class ProductResourceTests {
     void deleteShouldReturnNoContentWhenIdExists() throws Exception {
         ResultActions result =
                 mockMvc.perform(delete(API_ENDPOINT + "/{id}", existingId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isNoContent());
@@ -153,6 +173,7 @@ class ProductResourceTests {
     void deleteShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
         ResultActions result =
                 mockMvc.perform(delete(API_ENDPOINT + "/{id}", nonExistingId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isNotFound());
@@ -162,6 +183,7 @@ class ProductResourceTests {
     void deleteShouldReturnBadRequestWhenIdIsDependent() throws Exception {
         ResultActions result =
                 mockMvc.perform(delete(API_ENDPOINT + "/{id}", dependentId)
+                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isBadRequest());
