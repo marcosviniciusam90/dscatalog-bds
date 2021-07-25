@@ -25,9 +25,14 @@ public class ProductResource {
     private final ApplicationEventPublisher publisher;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
-        Page<ProductDTO> pageList = productService.findAllPaged(pageable);
+    public ResponseEntity<Page<ProductDTO>> find(
+            @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
+            Pageable pageable
+    ) {
+
+        Page<ProductDTO> pageList = productService.find(categoryId, pageable);
         return ResponseEntity.ok(pageList);
+
     }
 
     @GetMapping("/{id}")

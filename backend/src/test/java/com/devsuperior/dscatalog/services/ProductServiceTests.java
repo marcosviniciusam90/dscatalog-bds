@@ -63,7 +63,7 @@ class ProductServiceTests {
         doThrow(EmptyResultDataAccessException.class).when(productRepository).deleteById(nonExistingId);
         doThrow(DataIntegrityViolationException.class).when(productRepository).deleteById(dependentId);
 
-        when(productRepository.findAll(any(Pageable.class))).thenReturn(page);
+        when(productRepository.find(any(Category.class), any(Pageable.class))).thenReturn(page);
 
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
@@ -78,9 +78,9 @@ class ProductServiceTests {
     }
 
     @Test
-    void findAllPagedShouldReturnPage() {
+    void findShouldReturnPage() {
         Pageable pageable = PageRequest.of(0, 10);
-        Page<ProductDTO> result = productService.findAllPaged(pageable);
+        Page<ProductDTO> result = productService.find(0L, pageable);
 
         Assertions.assertNotNull(result);
         verify(productRepository, times(1)).findAll(pageable);
