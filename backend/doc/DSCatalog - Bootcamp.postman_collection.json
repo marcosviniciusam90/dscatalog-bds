@@ -278,7 +278,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/products?page=0&size=5&sort=name,asc",
+							"raw": "{{host}}/products?page=0&size=5&sort=name,asc&categoryId=3",
 							"host": [
 								"{{host}}"
 							],
@@ -297,6 +297,10 @@
 								{
 									"key": "sort",
 									"value": "name,asc"
+								},
+								{
+									"key": "categoryId",
+									"value": "3"
 								}
 							]
 						}
