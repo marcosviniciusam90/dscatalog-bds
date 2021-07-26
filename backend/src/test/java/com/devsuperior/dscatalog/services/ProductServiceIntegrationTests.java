@@ -52,7 +52,7 @@ class ProductServiceIntegrationTests {
         int page = 0;
         int size = 10;
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<ProductDTO> result = productService.find(0L, pageRequest);
+        Page<ProductDTO> result = productService.find("", 0L, pageRequest);
 
         Assertions.assertFalse(result.isEmpty());
         Assertions.assertEquals(page, result.getNumber());
@@ -65,7 +65,7 @@ class ProductServiceIntegrationTests {
         int page = 50;
         int size = 10;
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<ProductDTO> result = productService.find(0L, pageRequest);
+        Page<ProductDTO> result = productService.find("", 0L, pageRequest);
 
         Assertions.assertTrue(result.isEmpty());
     }
@@ -75,7 +75,7 @@ class ProductServiceIntegrationTests {
         int page = 0;
         int size = 10;
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("name"));
-        Page<ProductDTO> result = productService.find(0L, pageRequest);
+        Page<ProductDTO> result = productService.find("", 0L, pageRequest);
 
         Assertions.assertFalse(result.isEmpty());
         Assertions.assertEquals("Macbook Pro", result.getContent().get(0).getName());

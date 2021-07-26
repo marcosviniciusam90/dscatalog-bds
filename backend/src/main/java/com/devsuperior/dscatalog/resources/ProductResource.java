@@ -26,11 +26,12 @@ public class ProductResource {
 
     @GetMapping
     public ResponseEntity<Page<ProductDTO>> find(
+            @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
             Pageable pageable
     ) {
 
-        Page<ProductDTO> pageList = productService.find(categoryId, pageable);
+        Page<ProductDTO> pageList = productService.find(name, categoryId, pageable);
         return ResponseEntity.ok(pageList);
 
     }
