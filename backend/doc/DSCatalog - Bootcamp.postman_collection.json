@@ -278,7 +278,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/products?page=0&size=5&sort=name,asc&categoryId=3",
+							"raw": "{{host}}/products?page=0&size=5&sort=name,asc&categoryId=3&name=PC%20Gamer",
 							"host": [
 								"{{host}}"
 							],
@@ -301,6 +301,10 @@
 								{
 									"key": "categoryId",
 									"value": "3"
+								},
+								{
+									"key": "name",
+									"value": "PC%20Gamer"
 								}
 							]
 						}
