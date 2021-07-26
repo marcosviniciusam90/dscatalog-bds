@@ -35,7 +35,9 @@ public class ProductService {
         List<Category> categories = (categoryId == 0) ? null : List.of(categoryRepository.getOne(categoryId));
 
         Page<Product> pageList = productRepository.find(name.trim(), categories, pageable);
-        return pageList.map(PRODUCT_MAPPER::entityToDTOWithoutCategories);
+        productRepository.findProductsWithCategories(pageList.getContent());
+
+        return pageList.map(PRODUCT_MAPPER::entityToDTO);
     }
 
     @Transactional(readOnly = true)
