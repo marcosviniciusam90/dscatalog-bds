@@ -7,14 +7,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(
             "SELECT DISTINCT obj FROM Product obj " +
-            "INNER JOIN obj.categories categories " +
-            "WHERE (:category IS NULL OR :category IN categories) AND " +
+            "INNER JOIN obj.categories cats " +
+            "WHERE (COALESCE(:categories) IS NULL OR cats IN :categories) AND " +
                 "(LOWER(obj.name) LIKE LOWER(CONCAT('%', :name, '%')) )"
     )
-    Page<Product> find(String name, Category category, Pageable pageable);
+    Page<Product> find(String name, List<Category> categories, Pageable pageable);
 
 }

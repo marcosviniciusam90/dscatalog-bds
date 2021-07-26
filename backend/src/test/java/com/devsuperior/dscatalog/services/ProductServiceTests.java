@@ -63,7 +63,7 @@ class ProductServiceTests {
         doThrow(EmptyResultDataAccessException.class).when(productRepository).deleteById(nonExistingId);
         doThrow(DataIntegrityViolationException.class).when(productRepository).deleteById(dependentId);
 
-        when(productRepository.find(any(String.class), any(Category.class), any(Pageable.class))).thenReturn(page);
+        when(productRepository.find(any(String.class), any(), any(Pageable.class))).thenReturn(page);
 
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
