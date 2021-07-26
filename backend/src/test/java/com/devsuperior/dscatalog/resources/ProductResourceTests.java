@@ -80,10 +80,9 @@ class ProductResourceTests {
     }
 
     @Test
-    void findAllShouldReturnPage() throws Exception {
+    void findShouldReturnPage() throws Exception {
         ResultActions result =
                 mockMvc.perform(get(API_ENDPOINT)
-                .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON));
         result.andExpect(status().isOk());
     }
@@ -92,7 +91,6 @@ class ProductResourceTests {
     void findByIdShouldReturnProductDTOWhenIdExists() throws Exception {
         ResultActions result =
                 mockMvc.perform(get(API_ENDPOINT + "/{id}", existingId)
-                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk());
@@ -105,7 +103,6 @@ class ProductResourceTests {
     void findByIdShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
         ResultActions result =
                 mockMvc.perform(get(API_ENDPOINT + "/{id}", nonExistingId)
-                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isNotFound());

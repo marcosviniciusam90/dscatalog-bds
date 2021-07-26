@@ -83,7 +83,8 @@ class ProductServiceTests {
         Page<ProductDTO> result = productService.find("", 0L, pageable);
 
         Assertions.assertNotNull(result);
-        verify(productRepository, times(1)).findAll(pageable);
+        verify(productRepository, times(1)).find("", null, pageable);
+        verify(productRepository, times(1)).findProductsWithCategories(any());
     }
 
     @Test

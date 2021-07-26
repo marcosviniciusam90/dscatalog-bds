@@ -53,10 +53,9 @@ class ProductResourceIntegrationTests {
     }
 
     @Test
-    void findAllShouldReturnSortedPageWhenSortByName() throws Exception{
+    void findShouldReturnSortedPageWhenSortByName() throws Exception{
         ResultActions result =
                 mockMvc.perform(get(API_ENDPOINT + "?page=0&size=12&sort=name,asc")
-                        .header("Authorization", "Bearer " + accessToken)
                         .accept(MediaType.APPLICATION_JSON));
         result.andExpect(status().isOk());
         result.andExpect(jsonPath("$.totalElements").value(countTotalProducts));
